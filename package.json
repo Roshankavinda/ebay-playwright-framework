@@ -1,7 +1,7 @@
 {
   "name": "ebay-playwright-framework",
   "version": "1.0.0",
-  "description": "Playwright automation framework for eBay related products assignment",
+  "description": "Simple Playwright automation framework for eBay related products assignment",
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
@@ -16,16 +16,12 @@
   "keywords": [
     "playwright",
     "automation",
-    "qa",
-    "ebay"
+    "ebay",
+    "qa"
   ],
   "author": "Roshan Wickramasooriya",
   "license": "ISC",
   "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/Roshankavinda/ebay-playwright-framework/issues"
-  },
-  "homepage": "https://github.com/Roshankavinda/ebay-playwright-framework#readme",
   "devDependencies": {
     "@playwright/test": "^1.58.2",
     "@types/node": "^25.3.5"

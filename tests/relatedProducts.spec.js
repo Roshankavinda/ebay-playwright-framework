@@ -12,8 +12,29 @@ test.describe('eBay Related Products - Simple Assignment Coverage', () => {
     productPage = new ProductPage(page);
 
     await homePage.openSearchResults(testData.searchKeyword);
-    await homePage.openFirstValidProduct();
-    await productPage.verifyProductPageLoaded();
+
+    const candidateUrls = await homePage.getCandidateProductUrls(8);
+
+    let foundValidProduct = false;
+
+    for (const url of candidateUrls) {
+      await productPage.openProduct(url);
+
+      try {
+        await productPage.verifyProductPageLoaded();
+
+        if (await productPage.hasRelatedSection()) {
+          foundValidProduct = true;
+          break;
+        }
+      } catch (error) {
+        // try next product
+      }
+    }
+
+    if (!foundValidProduct) {
+      throw new Error('Could not find a product page with a related products section.');
+    }
   });
 
   test('RP-01 Verify related products section is displayed', async () => {

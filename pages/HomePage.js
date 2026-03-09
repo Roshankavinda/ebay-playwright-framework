@@ -32,29 +32,33 @@ class HomePage {
         await acceptButton.click();
       }
     } catch (error) {
-      // Ignore if not shown
+      // Ignore when banner is not shown
     }
   }
 
-  async openFirstValidProduct() {
+  async getCandidateProductUrls(limit = 8) {
+    const urls = [];
     const count = await this.productLinks.count();
 
-    for (let i = 0; i < count; i++) {
-      const link = this.productLinks.nth(i);
-      const href = await link.getAttribute('href');
+    for (let i = 0; i < count && urls.length < limit; i++) {
+      const href = await this.productLinks.nth(i).getAttribute('href');
 
       if (
         href &&
         href.includes('/itm/') &&
+        !href.includes('var=') &&
         !href.includes('p2349624') &&
-        !href.includes('var=')
+        !urls.includes(href)
       ) {
-        await this.page.goto(href, { waitUntil: 'domcontentloaded' });
-        return;
+        urls.push(href);
       }
     }
 
-    throw new Error('No valid product link found from search results.');
+    if (urls.length === 0) {
+      throw new Error('No valid product URLs found on search results page.');
+    }
+
+    return urls;
   }
 }
 

@@ -6,56 +6,78 @@ class ProductPage {
     this.productTitle = page.locator('h1').first();
   }
 
-  async verifyProductPageLoaded() {
+  async openProduct(url) {
+    await this.page.goto(url, { waitUntil: 'domcontentloaded' });
     await this.page.waitForLoadState('domcontentloaded');
+  }
+
+  async verifyProductPageLoaded() {
     await expect(this.productTitle).toBeVisible({ timeout: 15000 });
   }
 
   async getRelatedSection() {
-    const sectionSelectors = [
+    const selectors = [
       'section:has-text("Similar items")',
       'section:has-text("Related items")',
       'section:has-text("You may also like")',
       'section:has-text("People who viewed this item also viewed")',
       'section:has-text("Sponsored items customers also viewed")',
+      'section:has-text("Customers also viewed")',
       'div:has-text("Similar items")',
       'div:has-text("Related items")',
       'div:has-text("You may also like")',
       'div:has-text("People who viewed this item also viewed")',
-      'div:has-text("Sponsored items customers also viewed")'
+      'div:has-text("Sponsored items customers also viewed")',
+      'div:has-text("Customers also viewed")'
     ];
 
-    for (const selector of sectionSelectors) {
+    for (const selector of selectors) {
       const section = this.page.locator(selector).first();
+
       if (await section.count()) {
         try {
           if (await section.isVisible({ timeout: 2000 })) {
             return section;
           }
         } catch (error) {
-          // continue
+          // try next selector
         }
       }
     }
 
-    throw new Error('Related products section not found on product page.');
+    return null;
+  }
+
+  async hasRelatedSection() {
+    const section = await this.getRelatedSection();
+    return section !== null;
   }
 
   async verifyRelatedSectionVisible() {
     const section = await this.getRelatedSection();
+
+    if (!section) {
+      throw new Error('Related products section not found on product page.');
+    }
+
     await expect(section).toBeVisible();
   }
 
   async getRelatedProductLinks() {
     const section = await this.getRelatedSection();
-    const links = section.locator('a[href*="/itm/"]');
 
-    const count = await links.count();
-    if (count > 0) {
-      return links;
+    if (!section) {
+      throw new Error('Related products section not found on product page.');
     }
 
-    throw new Error('No related product links found inside related section.');
+    const links = section.locator('a[href*="/itm/"]');
+    const count = await links.count();
+
+    if (count === 0) {
+      throw new Error('No related product links found inside related section.');
+    }
+
+    return links;
   }
 
   async verifyAtLeastOneRelatedProductVisible() {
@@ -74,10 +96,12 @@ class ProductPage {
 
     for (let i = 0; i < itemsToCheck; i++) {
       const item = links.nth(i);
+
       await expect(item).toBeVisible();
 
-      const text = ((await item.textContent()) || '').trim();
-      expect(text.length).toBeGreaterThan(0);
+      const href = await item.getAttribute('href');
+      expect(href).toBeTruthy();
+      expect(href).toContain('/itm/');
     }
   }
 

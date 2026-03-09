@@ -32,7 +32,6 @@ class HomePage {
         await acceptButton.click();
       }
     } catch (error) {
-      // Ignore when banner is not shown
     }
   }
 

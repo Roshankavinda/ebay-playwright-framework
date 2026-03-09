@@ -28,7 +28,6 @@ test.describe('eBay Related Products - Simple Assignment Coverage', () => {
           break;
         }
       } catch (error) {
-        // try next product
       }
     }
 

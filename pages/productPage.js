@@ -40,7 +40,6 @@ class ProductPage {
             return section;
           }
         } catch (error) {
-          // try next selector
         }
       }
     }

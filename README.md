@@ -1,44 +1,48 @@
-eBay Playwright Framework – QA Skills Assessment
-Overview
+# eBay Playwright Framework – QA Skills Assessment
 
-This project contains a Playwright automation framework developed for the QA Skills Assessment.
+## Overview
 
-The automation validates the Related Products functionality on the eBay product page. The tests focus on core smoke scenarios to verify that related items are displayed correctly and that users can navigate to another product through the related products section.
+This project contains a **Playwright automation framework** developed for a **QA Skills Assessment**.
 
-The framework follows the Page Object Model (POM) design pattern to improve maintainability, readability, and scalability.
+The automation validates the **Related Products functionality** on the eBay product page. The tests focus on **core smoke scenarios** to verify that related items are displayed correctly and that users can navigate to another product through the related products section.
 
-Automated Test Scope
+The framework follows the **Page Object Model (POM)** design pattern to improve **maintainability, readability, and scalability**.
+
+---
+
+# Automated Test Scope
 
 The following test cases were automated:
 
-Test Case ID	Description
-RP-01	Verify the Related Products section is displayed on the product page
-RP-07	Verify related product cards display basic product information
-RP-05	Verify clicking a related product navigates to another product page
+| Test Case ID | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| RP-01        | Verify the Related Products section is displayed on the product page |
+| RP-07        | Verify related product cards display basic product information       |
+| RP-05        | Verify clicking a related product navigates to another product page  |
 
 Additional validations such as:
 
-Category matching
+* Category matching
+* Price band validation
+* Ranking logic validation
+* Responsive layout validation
 
-Price band validation
+were identified in the **manual test suite** but were **not included in the initial automation scope**.
 
-Ranking logic validation
+---
 
-Responsive layout validation
+# Tech Stack
 
-were identified in the manual test suite but were not included in the initial automation scope.
+* Playwright
+* JavaScript
+* Node.js
+* Page Object Model (POM)
 
-Tech Stack
+---
 
-Playwright
+# Project Structure
 
-JavaScript
-
-Node.js
-
-Page Object Model (POM)
-
-Project Structure
+```
 ebay-playwright-framework/
 ├── package.json
 ├── package-lock.json
@@ -51,116 +55,154 @@ ebay-playwright-framework/
 │   └── relatedProducts.spec.js
 └── utils/
     └── testData.js
-pages
+```
 
-Contains Page Object classes responsible for UI interaction logic.
+### pages
 
-tests
+Contains **Page Object classes** responsible for UI interaction logic.
 
-Contains Playwright test cases that validate the functionality.
+### tests
 
-utils
+Contains **Playwright test cases** that validate application functionality.
 
-Contains reusable test data used across tests.
+### utils
 
-Setup Instructions
-1. Install Node.js
+Contains **reusable test data** used across the tests.
 
-Ensure Node.js v18 or higher is installed.
+---
+
+# Setup Instructions
+
+## 1. Install Node.js
+
+Ensure **Node.js v18 or higher** is installed.
 
 Check installation:
 
+```
 node -v
-2. Clone the repository
-git clone <https://github.com/Roshankavinda/ebay-playwright-framework>
+```
+
+---
+
+## 2. Clone the Repository
+
+```
+git clone https://github.com/Roshankavinda/ebay-playwright-framework
 cd ebay-playwright-framework
-3. Install project dependencies
+```
+
+---
+
+## 3. Install Project Dependencies
+
+```
 npm install
-4. Install Playwright browsers
+```
+
+---
+
+## 4. Install Playwright Browsers
+
+```
 npx playwright install
-Run Tests
+```
 
-Run all tests:
+---
 
+# Run Tests
+
+### Run all tests
+
+```
 npm test
+```
 
-Run tests in headed mode (browser visible):
+### Run tests in headed mode (browser visible)
 
+```
 npx playwright test --headed
+```
 
-Run tests in Playwright UI mode:
+### Run tests in Playwright UI mode
 
+```
 npx playwright test --ui
-View Test Report
+```
 
-After test execution, open the Playwright HTML report:
+---
 
+# View Test Report
+
+After test execution, open the **Playwright HTML report**:
+
+```
 npx playwright show-report
+```
 
 The report includes:
 
-Test results
+* Test results
+* Screenshots for failures
+* Execution traces
+* Video recordings
 
-Screenshots for failures
+---
 
-Execution trace
+# Framework Design
 
-Video recordings
+This framework uses the **Page Object Model (POM)** pattern to separate **test logic from UI interaction logic**.
 
-Framework Design
-
-This framework uses the Page Object Model (POM) pattern to separate test logic from UI interaction logic.
-
-HomePage.js
-
-Responsible for:
-
-Opening eBay search results
-
-Handling consent banners
-
-Collecting candidate product URLs
-
-ProductPage.js
+## HomePage.js
 
 Responsible for:
 
-Verifying product page load
+* Opening eBay search results
+* Handling consent banners
+* Collecting candidate product URLs
 
-Detecting related product sections
+---
 
-Validating related product items
+## ProductPage.js
 
-Handling navigation between related products
+Responsible for:
 
-relatedProducts.spec.js
+* Verifying product page load
+* Detecting related product sections
+* Validating related product items
+* Handling navigation between related products
 
-Contains the automated test scenarios and orchestrates interactions between page objects.
+---
 
-Test Strategy
+## relatedProducts.spec.js
 
-Because eBay pages are dynamic and vary between products, the framework:
+Contains the **automated test scenarios** and orchestrates interactions between page objects.
 
-Searches for products using the keyword wallet
+---
 
-Retrieves multiple candidate product URLs
+# Test Strategy
 
-Selects the first product that contains a valid related products section
+Because **eBay pages are dynamic and vary between products**, the framework:
 
-Executes the automation scenarios on that product page
+1. Searches for products using the keyword **"wallet"**
+2. Retrieves **multiple candidate product URLs**
+3. Selects the **first product containing a valid related products section**
+4. Executes the automation scenarios on that product page
 
-This approach improves test stability.
+This approach improves **test stability and reliability**.
 
-Notes
+---
 
-eBay product pages can render different layouts depending on the product and seller.
+# Notes
 
-The automation dynamically selects a valid product page containing related items.
+* eBay product pages can render **different layouts depending on the product and seller**.
+* The automation dynamically selects a **valid product page containing related items**.
+* Tests are written as **smoke validations** to demonstrate automation framework design.
 
-Tests are written as smoke validations to demonstrate automation framework design.
+---
 
-Author
+# Author
 
-Roshan Wickramasooriya
+**Roshan Wickramasooriya**
 Software Quality Assurance Engineer
 Sri Lanka

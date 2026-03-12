@@ -1,6 +1,6 @@
 const { test } = require('@playwright/test');
 const HomePage = require('../pages/HomePage');
-const ProductPage = require('../pages/ProductPage');
+const ProductPage = require('../pages/productPage');
 const testData = require('../utils/testData');
 
 test.describe('eBay Related Products - Simple Assignment Coverage', () => {
